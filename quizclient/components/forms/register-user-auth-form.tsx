@@ -10,36 +10,50 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signIn } from "next-auth/react";
+import { useMutation, useQueryClient } from 'react-query';
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import GoogleSignInButton from "../github-auth-button";
+import { registerFormSchema } from "@/schemas";
+import { postRegister } from "@/utils/authClient";
+import { deviceId, platform, timezone } from "@/lib/browser-detail";
 
-const formSchema = z.object({
-  email: z.string().email({ message: "Enter a valid email address" }),
-});
 
-type UserFormValue = z.infer<typeof formSchema>;
+type UserFormValue = z.infer<typeof registerFormSchema>;
 
-export default function UserAuthForm() {
-  const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl");
+interface RegisterUserAuthFormProps {
+  toggleToLogin: () => void;
+}
+
+const RegisterUserAuthForm: React.FC<RegisterUserAuthFormProps> = ({ toggleToLogin }) => {
+  // const searchParams = useSearchParams();
+  // const callbackUrl = searchParams.get("callbackUrl");
+  const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
   const defaultValues = {
     email: "demo@gmail.com",
   };
   const form = useForm<UserFormValue>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(registerFormSchema),
     defaultValues,
   });
 
-  const onSubmit = async (data: UserFormValue) => {
-    signIn("credentials", {
-      email: data.email,
-      callbackUrl: callbackUrl ?? "/dashboard",
-    });
+
+
+  const mutation = useMutation(
+       (payload:UserFormValue) => postRegister(payload),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('yourQueryKey');
+      },
+    }
+  );
+  const onSubmit = (data: UserFormValue) => {
+    
+    const payload= {  email: data.email, password: data.password,name: data.name, platform, timezone, deviceId };
+    mutation.mutate(payload)
   };
 
   return (
@@ -85,9 +99,27 @@ export default function UserAuthForm() {
               </FormItem>
             )}
           />
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Name</FormLabel>
+                <FormControl>
+                  <Input
+                    type="text"
+                    placeholder="Enter your name..."
+                    disabled={loading}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
           <Button disabled={loading} className="ml-auto w-full" type="submit">
-            Continue With Email
+            Register
           </Button>
         </form>
       </Form>
@@ -97,7 +129,7 @@ export default function UserAuthForm() {
         </div>
         <div className="relative flex justify-center text-xs uppercase">
           <span className="bg-background px-2 text-muted-foreground">
-            Or continue with
+          Already have an account? <p onClick={toggleToLogin} className="inline-block underline cursor-pointer">Log in</p> 
           </span>
         </div>
       </div>
@@ -105,3 +137,5 @@ export default function UserAuthForm() {
     </>
   );
 }
+
+export default RegisterUserAuthForm;
