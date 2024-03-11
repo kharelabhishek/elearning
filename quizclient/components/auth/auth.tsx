@@ -3,6 +3,7 @@
 import { useState } from "react";
 import LoginUserAuthForm from "@/components/forms/login-user-auth-form";
 import RegisterUserAuthForm from "@/components/forms/register-user-auth-form";
+import { toast } from "sonner"
 
 export default function Auth() {
   const [registerPage, setRegisterPage] = useState<boolean>(false);

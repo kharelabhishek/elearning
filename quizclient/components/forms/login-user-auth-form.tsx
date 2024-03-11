@@ -11,24 +11,18 @@ import {
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import GoogleSignInButton from "../github-auth-button";
+import { loginFormSchema } from "@/types/auth";
 
-const formSchema = z.object({
-  email: z.string().email({ message: "Enter a valid email address" }),
-  password: z.string().min(4),
-});
 
-type UserFormValue = z.infer<typeof formSchema>;
+type UserFormValue = z.infer<typeof loginFormSchema>;
 
-interface LoginUserAuthFormProps {
-  toggleToRegister: () => void;
-}
-
-const LoginUserAuthForm: React.FC<LoginUserAuthFormProps> = ({ toggleToRegister }) => {
+const LoginUserAuthForm = () => {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl");
   const [loading, setLoading] = useState(false);
@@ -36,7 +30,7 @@ const LoginUserAuthForm: React.FC<LoginUserAuthFormProps> = ({ toggleToRegister 
     email: "demo@gmail.com",
   };
   const form = useForm<UserFormValue>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(loginFormSchema),
     defaultValues,
   });
 
@@ -102,7 +96,7 @@ const LoginUserAuthForm: React.FC<LoginUserAuthFormProps> = ({ toggleToRegister 
         </div>
         <div className="relative flex justify-center text-xs uppercase">
           <span className="bg-background px-2 text-muted-foreground">
-          Don't have an account? <p onClick={toggleToRegister} className="inline-block underline cursor-pointer">Sign up</p> 
+          Don&apos;t have an account? <p onClick={()=> router.push("/signup")} className="inline-block underline cursor-pointer">Sign up</p> 
           </span>
         </div>
       </div>

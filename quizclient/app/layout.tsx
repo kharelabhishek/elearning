@@ -1,5 +1,5 @@
 import Providers from "@/components/layout/providers";
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "@/components/ui/sonner";
 import "@uploadthing/react/styles.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -25,8 +25,8 @@ export default async function RootLayout({
       <html lang="en" suppressHydrationWarning>
         <body className={`${inter.className} overflow-hidden`}>
           <Providers session={session}>
-            <Toaster />
             {children}
+            <Toaster />
           </Providers>
         </body>
       </html>
