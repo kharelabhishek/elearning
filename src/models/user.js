@@ -41,9 +41,7 @@ const userSchema = new Schema({
   countryCode: {
     type: String,
   },
-  timezone: {
-    type: Number
-  },
+
   birthDate: {
     type: Date
   },
@@ -109,8 +107,6 @@ export default User
 *           enum: ['male', 'female', 'other']
 *         countryCode:
 *           type: string
-*         timezone:
-*           type: number
 *         birthDate:
 *           type: string
 *         photoUrl:

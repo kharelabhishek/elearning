@@ -9,6 +9,7 @@ const { lookup } = geoip;
 
 export default async (req, res) => {
   const { error } = validateRegister(req.body);
+
   if (error) {
     let code = '00025';
     if (error.details[0].message.includes('email'))
@@ -60,7 +61,6 @@ export default async (req, res) => {
     platform: req.body.platform,
     isVerified: false,
     countryCode: geo == null ? 'US' : geo.country,
-    timezone: req.body.timezone,
     lastLogin: Date.now()
   });
 
@@ -104,8 +104,6 @@ export default async (req, res) => {
  *                platform:
  *                  type: string
  *                  enum: ['Android', 'IOS']
- *                timezone:
- *                  type: number
  *                deviceId:
  *                  type: string
  *      tags:

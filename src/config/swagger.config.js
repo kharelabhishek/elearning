@@ -18,7 +18,7 @@ export default {
     basePath: '/api',
     servers: [
       {
-        url: 'http://localhost:3000/api/',
+        url: 'http://localhost:8000/api/',
       },
     ],
   },
