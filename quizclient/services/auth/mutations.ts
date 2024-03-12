@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
-import { register, sendVerficationCode, verifyEmail } from "./api";
+import { login, register, sendVerficationCode, verifyEmail } from "./api";
 import { useRouter } from "next/navigation";
-import { registerFormSchema, verifyEmailSchema } from "@/types/auth";
+import { loginFormSchema, registerFormSchema, verifyEmailSchema } from "@/types/auth";
 import * as z   from "zod";
 import { toast } from "sonner";
 
@@ -33,8 +33,18 @@ export function useVerifyEmail() {
   return useMutation({
     mutationFn: (payload: VerifyEmail) => verifyEmail(payload),
     onSuccess(data) {
-      toast("Email is verified successfully.")
+      toast("Email is created successfully.")
       router.push(`/signin`);      
+    },
+  });
+}
+
+export function useLogin() {
+  type LoginForm = z.infer<typeof loginFormSchema>;
+  return useMutation({
+    mutationFn: (payload: LoginForm) => login(payload),
+    onSuccess(data) {
+      toast("Login successfully.")
     },
   });
 }

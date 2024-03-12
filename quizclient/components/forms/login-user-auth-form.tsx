@@ -11,21 +11,19 @@ import {
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import GoogleSignInButton from "../github-auth-button";
 import { loginFormSchema } from "@/types/auth";
+import { useState } from "react";
 
 
 type UserFormValue = z.infer<typeof loginFormSchema>;
 
 const LoginUserAuthForm = () => {
+  const [loading, setLoading] = useState(true)
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl");
-  const [loading, setLoading] = useState(false);
   const defaultValues = {
     email: "demo@gmail.com",
   };
@@ -35,10 +33,23 @@ const LoginUserAuthForm = () => {
   });
 
   const onSubmit = async (data: UserFormValue) => {
-    signIn("credentials", {
+
+    const signinresponse = await signIn("credentials", {
+      redirect: false,
       email: data.email,
-      callbackUrl: callbackUrl ?? "/dashboard",
+      password: data.password
+      // callbackUrl: callbackUrl ?? "/dashboard",
     });
+
+    if (signinresponse && !signinresponse.error) {
+      router.push('/dashboard');
+    }else{
+      router.push('/signin');
+    }
+    // else {
+      
+    // }
+
   };
 
   return (
@@ -96,7 +107,7 @@ const LoginUserAuthForm = () => {
         </div>
         <div className="relative flex justify-center text-xs uppercase">
           <span className="bg-background px-2 text-muted-foreground">
-          Don&apos;t have an account? <p onClick={()=> router.push("/signup")} className="inline-block underline cursor-pointer">Sign up</p> 
+            Don&apos;t have an account? <p onClick={() => router.push("/signup")} className="inline-block underline cursor-pointer">Sign up</p>
           </span>
         </div>
       </div>
