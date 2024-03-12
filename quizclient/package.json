@@ -45,6 +45,7 @@
     "date-fns": "^2.30.0",
     "eslint": "8.48.0",
     "eslint-config-next": "^14.0.1",
+    "input-otp": "^1.1.0",
     "lucide-react": "^0.291.0",
     "next": "^14.0.1",
     "next-auth": "^4.24.4",

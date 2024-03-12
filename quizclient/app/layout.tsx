@@ -9,7 +9,7 @@ import  {ReactQueryClientProvider}  from "@/components/reactquery/ReactQueryClie
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Next Shadcn",
+  title: "E-Learning",
   description: "Basic dashboard with Next.js and Shadcn",
 };
 
