@@ -33,7 +33,6 @@ export function useVerifyEmail() {
   return useMutation({
     mutationFn: (payload: VerifyEmail) => verifyEmail(payload),
     onSuccess(data) {
-      toast("Email is created successfully.")
       router.push(`/signin`);      
     },
   });

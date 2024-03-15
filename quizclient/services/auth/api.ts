@@ -4,7 +4,8 @@ import {
   verifyEmailSchema,
   loginFormSchema,
 } from "@/types/auth";
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
+import axios from "@/lib/axios";
 import { toast } from "sonner";
 import * as z from "zod";
 
@@ -19,9 +20,6 @@ export const register = async (
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/api/user`,
       formData,
-      {
-        headers: config,
-      },
     );
     return response;
   } catch (error: any) {
@@ -37,11 +35,6 @@ export const sendVerficationCode = async (
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/api/user/send-verification-code`,
       { email },
-      {
-        headers: {
-          config,
-        },
-      },
     );
     return response;
   } catch (error: any) {
@@ -56,11 +49,6 @@ export const verifyEmail = async (
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/api/user/verify-email`,
       { ...formData },
-      {
-        headers: {
-          config,
-        },
-      },
     );
     if (response.statusText === "OK") {
       toast("User Created Successfully.");
@@ -72,7 +60,6 @@ export const verifyEmail = async (
   }
 };
 
-
 export const login = async (
   formData: LoginFormSchema,
 ): Promise<AxiosResponse<any>> => {
@@ -80,12 +67,7 @@ export const login = async (
   try {
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/api/user/login`,
-      { email: formData.email, password: formData.password},
-      {
-        headers: {
-          config,
-        },
-      },
+      { email: formData.email, password: formData.password },
     );
     return response;
   } catch (error: any) {

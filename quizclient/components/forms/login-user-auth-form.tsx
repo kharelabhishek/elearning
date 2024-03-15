@@ -17,6 +17,7 @@ import * as z from "zod";
 import GoogleSignInButton from "../github-auth-button";
 import { loginFormSchema } from "@/types/auth";
 import { useState } from "react";
+import { toast } from "sonner";
 
 
 type UserFormValue = z.infer<typeof loginFormSchema>;
@@ -45,6 +46,9 @@ const LoginUserAuthForm = () => {
       router.push('/dashboard');
     }else{
       setLoading(false);
+      if(signinresponse?.status == 401){
+        toast(`Unable to login.`)
+      }
       router.push('/signin');
     }
     // else {
