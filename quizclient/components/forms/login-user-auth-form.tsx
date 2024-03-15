@@ -22,7 +22,7 @@ import { useState } from "react";
 type UserFormValue = z.infer<typeof loginFormSchema>;
 
 const LoginUserAuthForm = () => {
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const router = useRouter();
   const defaultValues = {
     email: "demo@gmail.com",
@@ -33,7 +33,7 @@ const LoginUserAuthForm = () => {
   });
 
   const onSubmit = async (data: UserFormValue) => {
-
+    setLoading(true);
     const signinresponse = await signIn("credentials", {
       redirect: false,
       email: data.email,
@@ -44,6 +44,7 @@ const LoginUserAuthForm = () => {
     if (signinresponse && !signinresponse.error) {
       router.push('/dashboard');
     }else{
+      setLoading(false);
       router.push('/signin');
     }
     // else {
