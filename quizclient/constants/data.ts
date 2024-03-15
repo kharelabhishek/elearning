@@ -2,93 +2,71 @@ import { Icons } from "@/components/icons";
 import { NavItem, SidebarNavItem } from "@/types";
 
 export type User = {
-  id: number;
   name: string;
-  company: string;
-  role: string;
-  verified: boolean;
-  status: string;
+  gender: string;
+  type: string;
+  isActivated: boolean;
 };
 export const users: User[] = [
   {
-    id: 1,
     name: "Candice Schiner",
-    company: "Dell",
-    role: "Frontend Developer",
-    verified: false,
-    status: "Active",
+    gender: "Dell",
+    type: "Frontend Developer",
+    isActivated: false,
   },
   {
-    id: 2,
     name: "John Doe",
-    company: "TechCorp",
-    role: "Backend Developer",
-    verified: true,
-    status: "Active",
+    gender: "TechCorp",
+    type: "Backend Developer",
+    isActivated: true,
   },
   {
-    id: 3,
     name: "Alice Johnson",
-    company: "WebTech",
-    role: "UI Designer",
-    verified: true,
-    status: "Active",
+    gender: "WebTech",
+    type: "UI Designer",
+    isActivated: true,
   },
   {
-    id: 4,
     name: "David Smith",
-    company: "Innovate Inc.",
-    role: "Fullstack Developer",
-    verified: false,
-    status: "Inactive",
+    gender: "Innovate Inc.",
+    type: "Fullstack Developer",
+    isActivated: false,
   },
   {
-    id: 5,
     name: "Emma Wilson",
-    company: "TechGuru",
-    role: "Product Manager",
-    verified: true,
-    status: "Active",
+    gender: "TechGuru",
+    type: "Product Manager",
+    isActivated: true,
   },
   {
-    id: 6,
     name: "James Brown",
-    company: "CodeGenius",
-    role: "QA Engineer",
-    verified: false,
-    status: "Active",
+    gender: "CodeGenius",
+    type: "QA Engineer",
+    isActivated: false,
   },
   {
-    id: 7,
     name: "Laura White",
-    company: "SoftWorks",
-    role: "UX Designer",
-    verified: true,
-    status: "Active",
+    gender: "SoftWorks",
+    type: "UX Designer",
+    isActivated: true,
   },
   {
-    id: 8,
     name: "Michael Lee",
-    company: "DevCraft",
-    role: "DevOps Engineer",
-    verified: false,
-    status: "Active",
+    gender: "DevCraft",
+    type: "DevOps Engineer",
+    isActivated: false,
   },
   {
-    id: 9,
     name: "Olivia Green",
-    company: "WebSolutions",
-    role: "Frontend Developer",
-    verified: true,
-    status: "Active",
+    gender: "WebSolutions",
+    type: "Frontend Developer",
+    isActivated: true,
   },
   {
-    id: 10,
     name: "Robert Taylor",
-    company: "DataTech",
-    role: "Data Analyst",
-    verified: false,
-    status: "Active",
+    gender: "DataTech",
+    type: "Data Analyst",
+    isActivated: false,
   },
 ];
 
