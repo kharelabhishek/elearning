@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { MobileSidebar } from "./mobile-sidebar";
 import { UserNav } from "./user-nav";
 import Link from "next/link";
+import { Points } from "../points";
 
 export default function Header() {
   return (
@@ -32,6 +33,7 @@ export default function Header() {
         </div>
 
         <div className="flex items-center gap-2">
+          <Points point={1000} />
           <UserNav />
           <ThemeToggle />
         </div>
