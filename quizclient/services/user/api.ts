@@ -13,3 +13,15 @@ export const getUser = async () => {
     throw new Error(`Error during POST request: ${error.message}`);
   }
 };
+
+
+export const getUserInfo = async(id:string) => {
+  try{
+    const response = await axios.get<any>(
+      `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/api/user/${id}`,
+    );
+    return response;
+  } catch (err:any) {
+    throw new Error(`Error during POST request: ${err.message}`);
+  }
+} 
